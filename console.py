@@ -16,13 +16,13 @@ ref = ['001164fa','0007f8c0','00080770','000834c0','000840c8','00084204','000842
 
 def consoleRun(string):
     ahk = AHK()
-    win = ahk.find_window(title=b'Fallout: New Vegas') # Find the opened window
-    win.activate()    
-    ahk.key_press('~')  # Send keys, as if typed (performs ahk string escapes)
-    time.sleep(0.5)
-    ahk.send_event(string, 1)        # Give the window focus
-    time.sleep(0.5)
-    ahk.send_event('~',1)
+    win = ahk.find_window(title=b'Fallout: New Vegas')  # Find the opened window
+    win.activate()                                      # give the window Focus  
+    ahk.key_press('~')                                  # open the console
+    time.sleep(0.5)                                     # Pause for half a second just so it doesnt start typing before the console is open
+    ahk.send_event(string, 1)                           # Type the string, passed from the if below
+    time.sleep(0.5)                                     # Sleep again to make sure its finished typing
+    ahk.send_event('~',1)                               # Close the console (THIS DOESNT ALWAYS WORK)
 
 def main():
     server = 'irc.chat.twitch.tv'
@@ -36,11 +36,9 @@ def main():
     sock.send(f"NICK {nickname}\n".encode('utf-8'))
     sock.send(f"JOIN {channel}\n".encode('utf-8'))
     god_time = datetime.now()- timedelta(seconds=60)
-    claw_time = datetime.now()- timedelta(seconds=60)
+    villain_time = datetime.now()- timedelta(seconds=60)
     level_time = datetime.now()- timedelta(seconds=60)
-    gun_time =datetime.now()- timedelta(seconds=60)
-    ammo_time = datetime.now()- timedelta(seconds=60)
-    super_time = datetime.now()- timedelta(seconds=60)
+    brute_time = datetime.now()- timedelta(seconds=60)
     while True:
         now = datetime.now()
         resp = sock.recv(2048).decode('utf-8')
@@ -51,17 +49,15 @@ def main():
                 #consoleRun("tgm {enter}")
                 god_time = now + timedelta(seconds=10)
         elif "!villain" in resp:
-            if now > claw_time:
+            if now > villain_time:
                 consoleRun("player.placeatme "+random.choice(villains)+"{enter}")
-                claw_time = now + timedelta(seconds=30)
+                villain_time = now + timedelta(seconds=30)
         elif "!brute" in resp:
-            if now > super_time:
-                print("claw")
+            if now > brute_time:
                 consoleRun("player.placeatme 00027FB3 1{enter}")
-                super_time = now + timedelta(minutes=30)
+                brute_time = now + timedelta(minutes=30)
         elif "!level" in resp:
             if now > level_time:
-                print("level up")
                 consoleRun("advlevel {enter}")
                 level_time = now + timedelta(seconds=10)
         elif "!roach" in resp:
