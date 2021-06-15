@@ -1,3 +1,4 @@
+import twitch_chat
 import socket
 sock = socket.socket()
 from ahk import AHK
@@ -25,16 +26,7 @@ def consoleRun(string):
     ahk.send_event('~',1)                               # Close the console (THIS DOESNT ALWAYS WORK)
 
 def main():
-    server = 'irc.chat.twitch.tv'
-    port = 6667
-    nickname = 'jacksbots'
-    token = 'oauth:YOURTOKEN'
-    channel = '#jackdvpt'
-
-    sock.connect((server, port))
-    sock.send(f"PASS {token}\n".encode('utf-8'))
-    sock.send(f"NICK {nickname}\n".encode('utf-8'))
-    sock.send(f"JOIN {channel}\n".encode('utf-8'))
+    twitch_chat.twitch_setup(sock)
     god_time = datetime.now()- timedelta(seconds=60)
     villain_time = datetime.now()- timedelta(seconds=60)
     level_time = datetime.now()- timedelta(seconds=60)
