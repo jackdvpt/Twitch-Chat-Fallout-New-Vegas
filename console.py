@@ -79,11 +79,11 @@ def main():
             consoleRun("showplasticsurgeonmenu {enter}")   
         elif "!speed" in resp:
             if now > speed_time:
-                consoleRun("player.setav speedmult "+str(random.randint(50,200))+"{enter}")  
+                consoleRun("player.setav speedmult "+str(random.randint(75,200))+"{enter}")  
                 speed_time = now + timedelta(seconds=30)
         elif "!size" in resp:
             if now > size_time:
-                consoleRun("player.setscale "+str(random.randint(5,50)/10)+"{enter}")
+                consoleRun("player.setscale "+str(random.randint(5,20)/10)+"{enter}")
                 size_time = now + timedelta(seconds=120)  
         elif "!dog" in resp:
             consoleRun("player.placeatme 0015C690 1{enter}")         
